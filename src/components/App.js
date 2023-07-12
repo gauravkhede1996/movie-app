@@ -15,7 +15,6 @@ class App extends React.Component {
     console.log(store.getState()," is the state");
   }
   handleFavouriteClick = (movie) => {
-    console.log("Add to Favourites clicked!")
     const {store} = this.props;
     store.dispatch(addFavourites(movie)); 
   }
@@ -25,8 +24,8 @@ class App extends React.Component {
     store.dispatch(removeFromFavourites(movie));
   }
   isFavourite = (movie) => {
-    const { favourites } = this.props.store.getState();
-    const index = favourites.indexOf(movie);
+    const { movies } = this.props.store.getState();
+    const index = movies.favourites.indexOf(movie);
     if (index!==-1) {
       return true;
     }
@@ -36,12 +35,13 @@ class App extends React.Component {
     this.props.store.dispatch(setShowFavourites(val));
   }
   render() {
-    const {list,favourites,showFavourites} = this.props.store.getState();
+    const {movies, search} = this.props.store.getState();
+    const {list,favourites,showFavourites} = movies;
     const displayMovies = showFavourites?favourites:list;
     console.log(this.props.store.getState()," is the state");
     return (
       <div className="App">
-      <Navbar />
+      <Navbar dispatch={this.props.store.dispatch} search={search}/>
       <div className='main'>
         <div className='tabs'>
           <div className={`tab ${showFavourites?'':'active-tabs'}`} onClick={()=> this.onChangeTab(false)}>Movies</div>

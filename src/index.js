@@ -2,10 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './components/App';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware  } from 'redux';
+import thunk from 'redux-thunk'
 import movies from './reducers/index';
 
-const store= createStore(movies);
+const logger = function ({dipatch, getState}) {
+  return function (next) {
+    return function (action) {
+      console.log(action.type," ACTION_TYPE");
+      next (action)
+    }
+  }
+}
+const store= createStore(movies,applyMiddleware(logger,thunk));
 // console.log("store ",store);
 // console.log("State in store",store.getState());
 // store.dispatch({
@@ -13,6 +22,7 @@ const store= createStore(movies);
 //   movies:[{name:'Superman'}],
 // });
 // console.log("After State",store.getState());
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
