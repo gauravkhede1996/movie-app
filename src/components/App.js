@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Navbar from '../components/Navbar';
 import { data } from '../data';
 import MovieCard  from './MovieCard';
 import { addMovies, addFavourites, removeFromFavourites, setShowFavourites} from '../actions/index';
-import { connect } from '../index';
+
 
 class App extends React.Component {
   componentDidMount(){
